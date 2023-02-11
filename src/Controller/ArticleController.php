@@ -4,20 +4,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 class ArticleController extends AbstractController
 {
-    /**
-     * @Route("/")
-     */
+    #[Route('/', name: 'app_homepage')]
     public function homepage(){
-        return new Response('Страничка1');
+        return $this->render('articles/homepage.html.twig');
     }
 
-    /**
-     * @Route("/articles/{slug}")
-     */
-
+    #[Route('/articles/{slug}', name: 'app_article_show')]
     public function show($slug)
     {
         $comments = [
@@ -26,11 +20,19 @@ class ArticleController extends AbstractController
             'Text3',
             ];
 
+        dump($slug, $this);
+
         return $this->render('/articles/show.html.twig', [
             'article' => ucwords(str_replace('-', ' ', $slug)),
             'comments' => $comments
         ]);
         //return new Response(sprintf('Page - %s', ucwords(str_replace('-', ' ', $slug))));
+    }
+
+    #[Route('/blog', name: 'blog_listtt')]
+    public function list(): Response
+    {
+        return new Response('Страничка блог');
     }
 
 }
