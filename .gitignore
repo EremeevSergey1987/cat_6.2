@@ -8,7 +8,4 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
-/vendor/autoload.php
-/vendor/composer/
-/vendor/symfony/
 
