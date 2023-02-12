@@ -85,7 +85,3 @@ body {
 .featured-border {
     border-top: 5px solid lightblue !important;
 }
-
-.mr-auto, .mx-auto {
-    margin-right: auto!important;
-}
