@@ -1,3 +1,4 @@
+import $ from 'jquery';
 $(function () {
 
   $('[data-item=likes]').each(function () {

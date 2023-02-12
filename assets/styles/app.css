@@ -1,3 +1,5 @@
+@import "~bootstrap";
+@import "detail.css";
 html {
     position: relative;
     min-height: 100%;
@@ -17,12 +19,12 @@ body {
 }
 
 .navbar-bg {
-    background: url(/images/nav-background.jpg) center;
+    background: url(../../public/images/nav-background.jpg) center;
     background-size: 100%;
 }
 
 .navbar > .container {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(5, 5, 5, 0.3);
 }
 
 .nav-profile-img {
