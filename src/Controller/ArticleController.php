@@ -1,25 +1,24 @@
 <?php
 namespace App\Controller;
+use App\Controller\Service\MarkdownParser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
-use Symfony\Contracts\Cache\CacheInterface;
 
 class ArticleController extends AbstractController
 {
     #[Route('/', name: 'app_homepage')]
     public function homepage(Environment $twig){
+        //dd($this->getParameter('app.support_email'));
         $thml = $twig->render('articles/homepage.html.twig');
         return new Response($thml);
         //return $this->render('articles/homepage.html.twig');
     }
 
     #[Route('/articles/{slug}', name: 'app_article_show')]
-    public function show($slug, CacheInterface $cache)
+    public function show($slug, MarkdownParser $markdownParcer)
     {
-        dd($cache);
-
         $comments = [
             'Text',
             'Text2',
@@ -51,30 +50,13 @@ Morbi blandit cursus risus at ultrices. Adipiscing vitae proin sagittis nisl rho
         sed egestas egestas. Egestas dui id ornare arcu odio ut.
 EOF;
 
-
-//        dump($slug, $this);
-//        $item = $cache->getItem('markdown_' . md5($articleContent));
-//        dd($item);
-//        if(!  $item->isHit()){
-//            $item->set($articleContent);
-//            $cache->save($item);
-//        }
-//        $articleContent = $item->get();
-
-        $articleContent = $cache->get('markdown_' . md5($articleContent),
-            function () use ($articleContent){
-            return $articleContent;
-        });
-
-
-
+        $articleContent = $markdownParcer->parce($articleContent);
 
         return $this->render('/articles/show.html.twig', [
             'article' => ucwords(str_replace('-', ' ', $slug)),
             'articleContent' => $articleContent,
             'comments' => $comments,
         ]);
-        //return new Response(sprintf('Page - %s', ucwords(str_replace('-', ' ', $slug))));
     }
 
     #[Route('/blog', name: 'blog_listtt')]
