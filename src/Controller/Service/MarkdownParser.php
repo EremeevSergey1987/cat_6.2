@@ -2,6 +2,7 @@
 namespace App\Controller\Service;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
 
 class MarkdownParser
 {
@@ -13,12 +14,24 @@ class MarkdownParser
      * @var LoggerInterface
      */
     private $logger;
-    public function __construct(CacheInterface $cache, LoggerInterface $markdownLogger){
+    private bool $debug;
+
+    public function __construct(
+        $cache,
+        LoggerInterface $markdownLogger,
+        bool $debug
+    )
+    {
         $this->cache = $cache;
         $this->logger = $markdownLogger;
+        $this->debug = $debug;
     }
     public function parce(string $source): string
     {
+        if($this->debug){
+            return $source;
+        }
+
         if(stripos($source, 'красн') !== false ){
             $this->logger->info('Есть!');
         }
@@ -26,7 +39,5 @@ class MarkdownParser
             function () use ($source){
                 return $source;
             });
-
     }
-
 }

@@ -9,7 +9,8 @@ use Twig\Environment;
 class ArticleController extends AbstractController
 {
     #[Route('/', name: 'app_homepage')]
-    public function homepage(Environment $twig){
+    public function homepage(Environment $twig, $slackUrl){
+        dd($slackUrl);
         //dd($this->getParameter('app.support_email'));
         $thml = $twig->render('articles/homepage.html.twig');
         return new Response($thml);
@@ -59,7 +60,7 @@ EOF;
         ]);
     }
 
-    #[Route('/blog', name: 'blog_listtt')]
+    #[Route('/blog', name: 'blog_list')]
     public function list(): Response
     {
         return new Response('Страничка блог');
